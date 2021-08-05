@@ -1,10 +1,13 @@
+import { ErrorMessage } from "formik";
 import PropTypes from "prop-types";
 import React from "react";
-import { FormGroup, Input, Label } from "reactstrap";
+import { FormFeedback, FormGroup, Input, Label } from "reactstrap";
 
 const InputField = (props) => {
-  const { field, type, label, placeholder, disabled } = props;
+  const { field, form, type, label, placeholder, disabled } = props;
   const { name } = field;
+  const { errors, touched } = form;
+  const showError = errors[name] && touched[name];
 
   return (
     <div>
@@ -16,7 +19,9 @@ const InputField = (props) => {
           {...field}
           disabled={disabled}
           placeholder={placeholder}
+          invalid={showError}
         />
+        <ErrorMessage name={name} component={FormFeedback} />
       </FormGroup>
     </div>
   );

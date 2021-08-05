@@ -1,13 +1,18 @@
+import { ErrorMessage } from "formik";
 import PropTypes from "prop-types";
 import React from "react";
 import Select from "react-select";
-import { FormGroup, Label } from "reactstrap";
+import { FormFeedback, FormGroup, Label } from "reactstrap";
 
 const SelectField = (props) => {
-  const { field, options, label, placeholder } = props;
+  const { field, form, options, label, placeholder, disabled } = props;
   const { name, value } = field;
-  console.log(field);
+  const { errors, touched } = form;
+
+  const showError = errors[name] && touched[name];
+
   const SelectedOption = options.find((option) => option.value === value);
+
   const handleSelectFieldChange = (selectedOption) => {
     const selectedValue = selectedOption
       ? selectedOption.value
@@ -24,11 +29,14 @@ const SelectField = (props) => {
           name={name}
           {...field}
           value={SelectedOption}
+          onBlur={() => form.setFieldTouched(name, true)}
           onChange={handleSelectFieldChange}
           options={options}
-          // disabled={disabled}
+          disabled={disabled}
           placeholder={placeholder}
+          className={showError ? "is-invalid" : ""}
         />
+        <ErrorMessage name={name} component={FormFeedback} />
       </FormGroup>
     </div>
   );
@@ -41,14 +49,14 @@ SelectField.propTypes = {
   type: PropTypes.string,
   options: PropTypes.array,
   placeholder: PropTypes.string,
-  // disabled: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 SelectField.defaultProps = {
   type: "text",
   options: [],
   placeholder: "",
-  // disabled: false,
+  disabled: false,
 };
 
 export default SelectField;
