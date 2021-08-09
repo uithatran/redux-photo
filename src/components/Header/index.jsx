@@ -1,7 +1,7 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { Col, Container, Row } from 'reactstrap';
-import './Header.scss';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { Col, Container, Row } from "reactstrap";
+import "./Header.scss";
 
 Header.propTypes = {};
 
@@ -25,10 +25,10 @@ function Header() {
             <NavLink
               exact
               className="header__link"
-              to="/photos"
+              to="/sign-in"
               activeClassName="header__link--active"
             >
-              Redux Project
+              Sign In
             </NavLink>
           </Col>
         </Row>
